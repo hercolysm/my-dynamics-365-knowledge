@@ -1,12 +1,16 @@
-﻿namespace Tests
+﻿using Microsoft.Xrm.Sdk;
+using Microsoft.Crm.Sdk.Messages;
+
+namespace Tests.Plugins
 {
     [TestClass]
-    public sealed class Opportunity
+    public class OpportunityTest : MSTestSettings
     {
         [TestMethod]
-        public void WinOpportunityRequestTest()
+        [DataRow("")]
+        public void WinOpportunityRequestTest(string id)
         {
-            Guid opportunityId = new Guid("{C2986E6E-3BE4-4DD1-9D40-A97AA4206199}");
+            Guid opportunityId = new Guid(id);
 
             var request = new WinOpportunityRequest
             {
@@ -32,9 +36,10 @@
         }
 
         [TestMethod]
-        public void UpdateOpportunityStatecodeTest()
+        [DataRow("")]
+        public void UpdateOpportunityStatecodeTest(string id)
         {
-            Entity opportunity = new Entity("opportunity", new Guid("{C2986E6E-3BE4-4DD1-9D40-A97AA4206199}"));
+            Entity opportunity = new Entity("opportunity", new Guid(id));
             opportunity["statecode"] = new OptionSetValue(1); // Status - Ganho
             opportunity["statuscode"] = new OptionSetValue(860090005); // Razão do Status - Ganhos do Mês
             service.Update(opportunity);
